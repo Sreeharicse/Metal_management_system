@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Hexagon, Gift, TreePine } from 'lucide-react'
 import './Login.css'
+import logo from '../assets/techxl-logo.png'
 
 export default function Login() {
     const [email, setEmail] = useState('')
@@ -22,9 +23,18 @@ export default function Login() {
         e.preventDefault()
         try {
             setError('')
-            await login(email, password)
+            console.log('Attempting login for:', email)
+            const data = await login(email, password)
+            console.log('Login successful:', data)
         } catch (err) {
-            setError('Failed to log in: ' + err.message)
+            console.error('Login error:', err)
+            if (err.message.includes('Email not confirmed')) {
+                setError('Login failed: Please check your email and confirm your account first.')
+            } else if (err.message.includes('Invalid login credentials')) {
+                setError('Login failed: Incorrect email or password.')
+            } else {
+                setError('Failed to log in: ' + err.message)
+            }
         }
     }
 
@@ -34,11 +44,7 @@ export default function Login() {
             <div className="login-left">
                 {/* Brand Logo */}
                 <div className="brand-logo">
-                    <Hexagon size={32} fill="#1B3B2F" stroke="none" />
-                    <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1' }}>
-                        <span>METAL</span>
-                        <span>SYSTEMS</span>
-                    </div>
+                    <img src={logo} alt="Techxl Logo" style={{ height: '50px', objectFit: 'contain' }} />
                 </div>
 
                 {/* Main Illustration Area */}
@@ -71,8 +77,7 @@ export default function Login() {
             {/* RIGHT SIDE: FORM */}
             <div className="login-right">
                 <div className="login-form-box">
-                    <span className="brand-title">Metal Systems</span>
-                    <h2>Welcome Back</h2>
+                    <img src={logo} alt="Techxl Logo" style={{ height: '40px', marginBottom: '30px', objectFit: 'contain' }} />
 
                     {error && <div className="error-msg">{error}</div>}
 
@@ -84,6 +89,8 @@ export default function Login() {
                                 className="custom-input"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
+                                name="login_email"
+                                autoComplete="off"
                                 required
                                 placeholder="Enter your email"
                             />
@@ -96,6 +103,8 @@ export default function Login() {
                                 className="custom-input"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
+                                name="login_password"
+                                autoComplete="new-password"
                                 required
                                 placeholder="Enter your password"
                             />
@@ -103,7 +112,7 @@ export default function Login() {
                         </div>
 
                         <button type="submit" className="login-btn" disabled={loading}>
-                            {loading ? 'Logging in...' : 'Login to System'}
+                            {loading ? 'Logging in...' : 'Login'}
                         </button>
                     </form>
 

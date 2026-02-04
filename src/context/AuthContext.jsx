@@ -31,10 +31,10 @@ export const AuthProvider = ({ children }) => {
 
                 if (error) throw error
 
-                if (session?.user) {
-                    console.log('Session found for user:', session.user.id)
-                    setUser(session.user)
-                    await fetchRole(session.user.id, session.user.email)
+                if (data?.session?.user) {
+                    console.log('Session found for user:', data.session.user.id)
+                    setUser(data.session.user)
+                    await fetchRole(data.session.user.id, data.session.user.email)
                 } else {
                     console.log('No active session found.')
                 }
@@ -123,11 +123,13 @@ export const AuthProvider = ({ children }) => {
     }
 
     const signup = async (email, password) => {
+        // Step 1: Create user in Supabase Auth
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
         })
         if (error) throw error
+
         return data
     }
 

@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import AdminDashboard from './pages/AdminDashboard'
 import UserDashboard from './pages/UserDashboard'
 import MetalDetail from './pages/MetalDetail'
+import Market from './pages/Market'
 import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {
@@ -32,6 +33,12 @@ function App() {
             <Route path="/metal/:id" element={
               <ProtectedRoute>
                 <MetalDetail />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/market" element={
+              <ProtectedRoute>
+                <Market />
               </ProtectedRoute>
             } />
 
