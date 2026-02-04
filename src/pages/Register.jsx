@@ -31,9 +31,9 @@ export default function Register() {
             const cleanEmail = email.replace(/\s+/g, '').trim().toLowerCase()
 
             await signup(cleanEmail, password)
-            setMsg('Success! Redirecting...')
-            // Auto login or redirect
-            setTimeout(() => navigate('/login'), 1500)
+            setMsg('Account created successfully! Redirecting to login...')
+            // Auto redirect to login
+            setTimeout(() => navigate('/login'), 2000)
         } catch (err) {
             console.error(err)
             setError('Failed to register: ' + err.message)
@@ -59,6 +59,8 @@ export default function Register() {
                                 className="custom-input"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
+                                name="register_email"
+                                autoComplete="off"
                                 required
                                 placeholder="Enter your email"
                             />
@@ -71,6 +73,8 @@ export default function Register() {
                                 className="custom-input"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
+                                name="register_password"
+                                autoComplete="new-password"
                                 required
                                 placeholder="Create a password"
                             />
@@ -83,6 +87,8 @@ export default function Register() {
                                 className="custom-input"
                                 value={confirmPassword}
                                 onChange={e => setConfirmPassword(e.target.value)}
+                                name="register_confirm_password"
+                                autoComplete="new-password"
                                 required
                                 placeholder="Confirm your password"
                             />

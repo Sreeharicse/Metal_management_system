@@ -6,33 +6,24 @@
     display: flex;
     font-family: 'Inter', sans-serif;
     overflow: hidden;
-    background-color: var(--bg-dark);
-    justify-content: center;
+    background-color: #0c0816;
+    /* Fallback color */
+    background-image: url('../assets/login-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    justify-content: flex-end;
+    /* Move to right */
     align-items: center;
+    padding-right: calc(15% - 70px);
+    /* Move 70px further right from previous 15% */
     position: relative;
 }
 
-/* Background Decoration (Optional subtle glow) */
-.login-container::before {
-    content: '';
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(16, 8, 30, 0) 70%);
-    top: -100px;
-    left: -100px;
-    z-index: 0;
-}
-
+/* Remove old abstract glowing decorations as they might clash with the new background */
+.login-container::before,
 .login-container::after {
-    content: '';
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(0, 213, 160, 0.08) 0%, rgba(16, 8, 30, 0) 70%);
-    bottom: -50px;
-    right: -50px;
-    z-index: 0;
+    display: none;
 }
 
 /* Hide the old split layout left side */
@@ -45,25 +36,34 @@
     flex: none;
     background: transparent;
     width: 100%;
-    max-width: 480px;
+    max-width: 420px;
+    /* Reduced from 480px */
     padding: 20px;
     z-index: 10;
 }
 
 .login-form-box {
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.15);
+    /* Increased opacity from 0.05 */
+    /* Very transparent */
+    backdrop-filter: blur(20px);
+    /* Glass blur effect */
+    -webkit-backdrop-filter: blur(20px);
     width: 100%;
-    padding: 50px;
+    padding: 40px;
+    /* Reduced from 50px */
     border-radius: 40px;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Subtle glass border */
     color: white;
+    /* Switch back to white for dark background */
     text-align: center;
 }
 
 .login-form-box h2 {
     font-size: 2.2rem;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
     font-weight: 700;
     color: white;
 }
@@ -88,16 +88,18 @@
     display: block;
     margin-bottom: 0.8rem;
     font-size: 0.9rem;
-    color: var(--text-muted);
-    font-weight: 500;
+    color: #000000;
+    /* Changed from var(--text-muted) to black */
+    font-weight: 600;
+    /* Slightly bolder for better visibility */
 }
 
-/* Dark Inputs */
+/* Glassy Inputs */
 .custom-input {
     width: 100%;
     padding: 16px 20px;
     border-radius: 20px;
-    background: #150B25;
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
     font-size: 1rem;
@@ -106,13 +108,14 @@
 }
 
 .custom-input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(0, 0, 0, 0.5);
+    /* Changed from light transparent to dark transparent */
 }
 
 .custom-input:focus {
     border-color: var(--primary);
-    background: #1A0E2E;
-    box-shadow: 0 0 20px rgba(253, 186, 49, 0.15);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(253, 186, 49, 0.2);
     transform: translateY(-2px);
 }
 
@@ -135,7 +138,8 @@
 .login-btn {
     width: 100%;
     padding: 16px;
-    margin-top: 30px;
+    margin-top: 20px;
+    /* Reduced from 30px */
     border-radius: 20px;
     border: none;
     background: var(--primary);
@@ -163,20 +167,22 @@
 }
 
 .register-text {
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: #000000;
+    /* Changed from var(--text-muted) to black */
 }
 
 .register-link {
-    color: white;
-    font-weight: 600;
+    color: var(--primary);
+    font-weight: 700;
     text-decoration: none;
     margin-left: 5px;
 }
 
 .register-link:hover {
-    color: var(--primary);
+    text-decoration: underline;
+    opacity: 0.8;
 }
 
 /* ERROR MESSAGE */

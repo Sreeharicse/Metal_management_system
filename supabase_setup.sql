@@ -29,10 +29,20 @@ create table public.user_metal_access (
   unique(user_id, metal_id)
 );
 
+create table public.metal_requests (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references public.profiles(id) not null,
+  metal_id uuid references public.metals(id) not null,
+  status text default 'pending', -- 'pending', 'approved', 'rejected'
+  requested_at timestamptz default now(),
+  unique(user_id, metal_id) -- Prevent duplicate pending requests for same metal
+);
+
 -- 3. Enable Security (RLS)
 alter table public.profiles enable row level security;
 alter table public.metals enable row level security;
 alter table public.user_metal_access enable row level security;
+alter table public.metal_requests enable row level security;
 
 -- 4. RLS Policies (Permissions)
 
@@ -41,6 +51,11 @@ create policy "Users can read own profile"
   on profiles for select 
   to authenticated 
   using ( auth.uid() = id );
+
+create policy "Users can insert own profile"
+  on profiles for insert
+  to authenticated
+  with check ( auth.uid() = id );
 
 create policy "Admins can read all profiles" 
   on profiles for select 
@@ -75,6 +90,22 @@ create policy "Admins can manage assignments"
   to authenticated 
   using ( (select role from profiles where id = auth.uid()) = 'admin' );
 
+-- Requests
+create policy "Users can see own requests" 
+  on metal_requests for select 
+  to authenticated 
+  using ( auth.uid() = user_id );
+
+create policy "Users can create requests" 
+  on metal_requests for insert 
+  to authenticated 
+  with check ( auth.uid() = user_id );
+
+create policy "Admins can manage all requests" 
+  on metal_requests for all 
+  to authenticated 
+  using ( (select role from profiles where id = auth.uid()) = 'admin' );
+
 
 -- 5. Seed Data (Initial Metals)
 insert into metals (name, rate, type, change) values
@@ -84,8 +115,24 @@ insert into metals (name, rate, type, change) values
 ('Copper', 3.85, 'industrial', 0.1),
 ('Aluminum', 1.10, 'industrial', -0.2);
 
+-- 6. Automatic Profile Trigger (Recommended)
+-- This automatically creates a profile record when a user signs up in Supabase Auth
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, email, role, name)
+  values (new.id, new.email, 'user', split_part(new.email, '@', 1));
+  return new;
+end;
+$$ language plpgsql security definer;
+
+-- Drop trigger if exists and create
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute function public.handle_new_user();
+
 -- IMPORTANT MANUAL STEP REMINDER:
--- 1. Run this entire script properly.
--- 2. Manually INSERT your profile in SQL using your UUID from Authentication tab:
--- insert into public.profiles (id, email, role, name)
--- values ('YOUR_UUID', 'sreehari@gmail.com', 'admin', 'Sreehari');
+-- 1. Run this entire script in your Supabase SQL Editor.
+-- 2. Your admin account is force-configured in AuthContext.jsx for 'sreehari@gmail.com'.
+-- 3. To make other users admins, update their role manually in the profiles table.
