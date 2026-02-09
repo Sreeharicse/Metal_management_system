@@ -1,0 +1,62 @@
+:root {
+  /* Theme Colors - Extracted from Reference */
+  --bg-dark: #10081E;
+  /* Deepest Background */
+  --bg-card: #221438;
+  /* Card Background (Purple/Plum) */
+  --bg-sidebar: #10081E;
+  /* Sidebar blends with bg or slightly different */
+
+  --primary: #FDBA31;
+  /* Neon Orange/Yellow (Active Tab) */
+  --secondary: #00D5A0;
+  /* Neon Green (Book Now / Positive) */
+  --accent-purple: #7C3AED;
+
+  /* Text Colors */
+  --text-main: #FFFFFF;
+  --text-muted: #A098B5;
+  /* Light Violet-Gray */
+
+  /* UI Tokens */
+  --radius-xl: 32px;
+  /* Very round corners */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+
+  --shadow-glow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  --font-main: 'Poppins', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+/* Utilities */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-accent {
+  color: var(--primary);
+}

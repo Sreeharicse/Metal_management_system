@@ -1,0 +1,198 @@
+/* Login.css - Dark Purple Neon Theme */
+/* Reset & Base */
+.login-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    background-color: #0c0816;
+    /* Fallback color */
+    background-image: url('../assets/login-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    justify-content: flex-end;
+    /* Move to right */
+    align-items: center;
+    padding-right: calc(15% - 70px);
+    /* Move 70px further right from previous 15% */
+    position: relative;
+}
+
+/* Remove old abstract glowing decorations as they might clash with the new background */
+.login-container::before,
+.login-container::after {
+    display: none;
+}
+
+/* Hide the old split layout left side */
+.login-left {
+    display: none;
+}
+
+/* Right Side - Becomes the Main Centered Card Container */
+.login-right {
+    flex: none;
+    background: transparent;
+    width: 100%;
+    max-width: 420px;
+    /* Reduced from 480px */
+    padding: 20px;
+    z-index: 10;
+}
+
+.login-form-box {
+    background: rgba(255, 255, 255, 0.15);
+    /* Increased opacity from 0.05 */
+    /* Very transparent */
+    backdrop-filter: blur(20px);
+    /* Glass blur effect */
+    -webkit-backdrop-filter: blur(20px);
+    width: 100%;
+    padding: 40px;
+    /* Reduced from 50px */
+    border-radius: 40px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Subtle glass border */
+    color: white;
+    /* Switch back to white for dark background */
+    text-align: center;
+}
+
+.login-form-box h2 {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: white;
+}
+
+/* Subtext or Brand in form */
+.brand-title {
+    color: var(--primary);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: 700;
+    display: block;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    color: #000000;
+    /* Changed from var(--text-muted) to black */
+    font-weight: 600;
+    /* Slightly bolder for better visibility */
+}
+
+/* Glassy Inputs */
+.custom-input {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.custom-input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    /* Changed from light transparent to dark transparent */
+}
+
+.custom-input:focus {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(253, 186, 49, 0.2);
+    transform: translateY(-2px);
+}
+
+.forgot-link {
+    display: block;
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    margin-top: 10px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+/* Neon Button */
+.login-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 20px;
+    /* Reduced from 30px */
+    border-radius: 20px;
+    border: none;
+    background: var(--primary);
+    color: #3D2900;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 10px 20px rgba(253, 186, 49, 0.2);
+}
+
+.login-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(253, 186, 49, 0.3);
+    background: #FFC857;
+}
+
+.login-btn:active {
+    transform: translateY(-1px);
+}
+
+.login-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.register-text {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #000000;
+    /* Changed from var(--text-muted) to black */
+}
+
+.register-link {
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+/* ERROR MESSAGE */
+.error-msg {
+    background: rgba(255, 71, 87, 0.1);
+    color: #FF4757;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 71, 87, 0.3);
+    font-size: 0.9rem;
+    text-align: left;
+}
